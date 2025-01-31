@@ -300,5 +300,100 @@ newQuoteButton.addEventListener('click', showRandomQuote);
   populateCategories();
   generateQuote();
 
+const quoteDisplay = document.getElementById("quoteDisplay");
+  const categoryFilter = document.getElementById("categoryFilter");
+  const conflictNotification = document.getElementById("conflictNotification");
 
+  let quotes = JSON.parse(localStorage.getItem('quotes')) || []; // Initialize from local storage
+
+  // Simulate server interaction (using a simple timeout)
+  function simulateServerFetch() {
+    setTimeout(() => {
+      const serverQuotes = [ // Simulate data from server
+        { text: "Server Quote 1", category: "Server" },
+        { text: "Server Quote 2", category: "Server" },
+        { text: "A new quote from the cloud!", category: "Cloud" }
+      ];
+      syncData(serverQuotes);
+    }, 2000); // Fetch every 2 seconds (adjust as needed)
+  }
+
+  function syncData(serverQuotes) {
+    const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
+
+    // Simple conflict resolution: Server data wins
+    if (JSON.stringify(localQuotes) !== JSON.stringify(serverQuotes)) {
+      quotes = serverQuotes;
+      localStorage.setItem('quotes', JSON.stringify(quotes));
+      conflictNotification.textContent = "Data synced with server. Local changes overwritten.";
+      populateCategories(); // Update categories
+      filterQuotes();      // Update displayed quotes
+    } else {
+      conflictNotification.textContent = ""; // Clear notification if no conflict
+    }
+  }
+
+  function generateQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    quoteDisplay.textContent = `"${quotes[randomIndex].text}"`;
+  }
+
+  function populateCategories() {
+    const categorySet = new Set();
+    quotes.forEach(quote => categorySet.add(quote.category));
+    categoryFilter.innerHTML = '<option value="all">All Categories</option>'; // Reset options
+    categorySet.forEach(category => {
+      const option = document.createElement("option");
+      option.value = category;
+      option.text = category;
+      categoryFilter.appendChild(option);
+    });
+
+    const lastSelectedCategory = localStorage.getItem('lastSelectedCategory') || 'all';
+    categoryFilter.value = lastSelectedCategory;
+    filterQuotes();
+  }
+
+  function filterQuotes() {
+    const selectedCategory = categoryFilter.value;
+    localStorage.setItem('lastSelectedCategory', selectedCategory);
+
+    quoteDisplay.innerHTML = ""; // Clear previous quotes
+
+    if (selectedCategory === "all") {
+      generateQuote();
+    } else {
+      const filteredQuotes = quotes.filter(quote => quote.category === selectedCategory);
+      if (filteredQuotes.length > 0) {
+          const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+          quoteDisplay.textContent = `"${filteredQuotes[randomIndex].text}"`;
+      } else {
+          quoteDisplay.textContent = "No quotes found in this category.";
+      }
+    }
+  }
+
+  function addQuote() {
+    const newQuoteInput = document.getElementById("newQuoteInput");
+    const newCategoryInput = document.getElementById("newCategoryInput");
+    const newQuote = newQuoteInput.value.trim();
+    const newCategory = newCategoryInput.value.trim();
+
+    if (newQuote !== "" && newCategory !== "") {
+      quotes.push({ text: newQuote, category: newCategory });
+      localStorage.setItem('quotes', JSON.stringify(quotes));
+
+      newQuoteInput.value = "";
+      newCategoryInput.value = "";
+
+      populateCategories();
+      filterQuotes();
+    }
+  }
+
+
+  // Initialize and start syncing
+  populateCategories();
+  generateQuote();
+  simulateServerFetch(); // Start periodic fetching
 
