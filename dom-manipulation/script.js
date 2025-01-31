@@ -9,6 +9,7 @@ const newQuoteButton = document.getElementById('newQuote');
 ["fetchQuotesFromServer"]
 ["await", "async", "https://jsonplaceholder.typicode.com/posts"]
 ["method", "POST", "headers", "Content-Type"]
+ ["syncQuotes"]
 
 let quotes = [
     { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
