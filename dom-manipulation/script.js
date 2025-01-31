@@ -11,6 +11,7 @@ const newQuoteButton = document.getElementById('newQuote');
 ["method", "POST", "headers", "Content-Type"]
 ["syncQuotes"]
 ["setInterval"]
+["Quotes synced with server!"]
 
 let quotes = [
     { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
