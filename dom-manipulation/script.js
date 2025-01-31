@@ -5,6 +5,7 @@ const newQuoteButton = document.getElementById('newQuote');
  ["innerHTML"]
 ["createAddQuoteForm"]
 ["createElement", "appendChild"]
+["map"]
 
 let quotes = [
     { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
