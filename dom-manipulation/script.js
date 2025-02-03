@@ -13,17 +13,6 @@ const newQuoteButton = document.getElementById('newQuote');
 ["syncQuotes"]
 ["setInterval"]
 ["Quotes synced with server!"]
- function importFromJsonFile(event) {
-    const fileReader = new FileReader();
-    fileReader.onload = function(event) {
-      const importedQuotes = JSON.parse(event.target.result);
-      quotes.push(...importedQuotes);
-      saveQuotes();
-      alert('Quotes imported successfully!');
-    };
-    fileReader.readAsText(event.target.files[0]);
-  }
-
 
 let quotes = [
     { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
