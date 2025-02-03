@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Dynamic Quote Generator</title>
+<input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 <style>
   /* Add some basic styling here */
   #quoteDisplay {
@@ -32,7 +33,7 @@
 <input type="text" id="newCategoryInput" placeholder="Enter category">
 <button onclick="addQuote()">Add Quote</button>
 
-
+<input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 <script src="script1.js"></script>
 
 </body>
