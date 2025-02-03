@@ -13,6 +13,7 @@ const newQuoteButton = document.getElementById('newQuote');
 ["syncQuotes"]
 ["setInterval"]
 ["Quotes synced with server!"]
+["Export Quotes"]
 
 let quotes = [
     { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
